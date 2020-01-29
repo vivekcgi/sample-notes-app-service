@@ -40,8 +40,7 @@ namespace notes_service
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
-                MigrateDatabase(app);
+            {                
                 app.UseDeveloperExceptionPage();
             }
             if (env.IsProduction())
