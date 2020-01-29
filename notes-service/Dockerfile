@@ -1,11 +1,19 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build
-WORKDIR /src
-COPY ["notes-service.csproj", "notes-service/"]
-RUN dotnet restore "notes-service/notes-service.csproj"
-COPY . .
-RUN dotnet publish "notes-service.csproj" -c Release -o /app
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+WORKDIR /source
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine AS runtime
+COPY notes-service.csproj ./aspnetapp/
+RUN dotnet restore ./aspnetapp/notes-service.csproj -r linux-musl-x64
+
+# copy everything else and build app
+COPY . ./aspnetapp/
+WORKDIR /source/aspnetapp
+RUN dotnet publish notes-service.csproj -c release -o /app -r linux-musl-x64 --self-contained false --no-restore
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
+RUN apk add icu-libs
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 WORKDIR /app
-COPY --from=build /app .
+COPY --from=build /app ./
+
 ENTRYPOINT ["dotnet", "notes-service.dll"]

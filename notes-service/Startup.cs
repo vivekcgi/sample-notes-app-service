@@ -42,6 +42,10 @@ namespace notes_service
             {
                 app.UseDeveloperExceptionPage();
             }
+            if (env.IsProduction())
+            {
+                MigrateDatabase(app);
+            }
 
             app.UseRouting();
 
@@ -49,6 +53,14 @@ namespace notes_service
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void MigrateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
+            }
         }
     }
 }
