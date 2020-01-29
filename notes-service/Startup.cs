@@ -40,6 +40,7 @@ namespace notes_service
         {
             if (env.IsDevelopment())
             {
+                MigrateDatabase(app);
                 app.UseDeveloperExceptionPage();
             }
             if (env.IsProduction())
@@ -59,8 +60,13 @@ namespace notes_service
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
+                bool canConnect = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.CanConnect();
+                if (!canConnect)
+                {
+                    serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
+                }
             }
+
         }
     }
 }
