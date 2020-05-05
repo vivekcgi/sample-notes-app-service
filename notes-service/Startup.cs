@@ -61,6 +61,7 @@ namespace notes_service
             });
         }
 
+        // Automatically migrate the database after startup
         private void MigrateDatabase(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())

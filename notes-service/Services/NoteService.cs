@@ -14,12 +14,16 @@ namespace notes_service.Services
         {
             _context = context;
         }
+
+        // add a note to the database
         public async Task<Note> Add(Note note)
         {
             Note newNote = _context.Add(note).Entity;
             await _context.SaveChangesAsync();
             return newNote;
         }
+
+        // get a note from a database by id
         public async Task<Note> Get(int? id)
         {
             Note note = await _context.Notes.FindAsync(id);
@@ -33,11 +37,13 @@ namespace notes_service.Services
             }            
         }
 
+        // get all the notes from the databse
         public IQueryable<Note> GetAll()
         {
             return _context.Notes.AsQueryable<Note>().OrderBy(a=>a.IsCompleted);
         }
 
+        // delete a specific note from a database by id
         public async Task<int> Delete(int? id)
         {
             Note note = await _context.Notes.FindAsync(id);
@@ -53,6 +59,7 @@ namespace notes_service.Services
             }
         }
         
+        // update a note into the databse
         public async Task<Note> Update(Note note)
         {
             _context.Entry<Note>(note).State = Microsoft.EntityFrameworkCore.EntityState.Modified;

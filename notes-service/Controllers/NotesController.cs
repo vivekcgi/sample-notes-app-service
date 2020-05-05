@@ -20,6 +20,7 @@ namespace notes_service.Controllers
             _noteService = noteService;
         }
 
+        // get all the notes
         [HttpGet]
         [Route("GetAll")]
         public async Task<IActionResult> GetAll()
@@ -34,6 +35,7 @@ namespace notes_service.Controllers
             return Ok(response);
         }
 
+        // get a specific note by id
         [HttpGet]
         [Route("{id?}")]
         public async Task<IActionResult> Get(int? id)
@@ -76,6 +78,7 @@ namespace notes_service.Controllers
             }
         }
 
+        // create a note and save to the database
         [HttpPost]
         [Route("Create")]
         public async Task<IActionResult> Add(Note note)
@@ -101,6 +104,7 @@ namespace notes_service.Controllers
             }
         }
 
+        // Update a note 
         [HttpPut]
         [Route("{id?}")]
         public async Task<IActionResult> Update([FromRoute]int? id, Note note)
@@ -142,6 +146,7 @@ namespace notes_service.Controllers
             }
         }
 
+        // delete a note
         [HttpDelete]
         [Route("{id?}")]
         public async Task<IActionResult> Delete(int? id)
