@@ -23,4 +23,4 @@ jobs:
     # Runs a single command using the runners shell
     - name: Building docker image
       run: |
-        docker build -t notes-app-service:latest ../../sample-notes-app-service/notes-service/
+        docker build -t notes-app-service:latest sample-notes-app-service/notes-service/
