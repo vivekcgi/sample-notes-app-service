@@ -31,4 +31,4 @@ jobs:
         docker build ./notes-service -t notes-app-service:latest
     - name: Pushing docker image to registry
       run: |
-        docker push notes-app-service:latest
+        docker push ${{ secrets.DOCKER_HUB_USER }}/notes-app-service:latest
