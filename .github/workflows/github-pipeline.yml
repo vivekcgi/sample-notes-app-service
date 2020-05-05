@@ -24,4 +24,4 @@ jobs:
     - name: Building docker image
       run: |
         echo $COMMIT
-        docker build -t notes-app-service:$COMMIT ./notes-service/
+        docker build -t notes-app-service:$COMMIT ./sample-notes-app-service/notes-service/
