@@ -23,5 +23,5 @@ jobs:
     # Runs a single command using the runners shell
     - name: Building docker image
       run: |
-        echo $COMMIT
-        docker build -t notes-app-service:$COMMIT ./sample-notes-app-service/notes-service/
+        echo $(system.pullRequest.sourceCommitId)
+        docker build -t notes-app-service:$(system.pullRequest.sourceCommitId) ./sample-notes-app-service/notes-service/
