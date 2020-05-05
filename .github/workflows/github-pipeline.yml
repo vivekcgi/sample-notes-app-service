@@ -31,4 +31,7 @@ jobs:
         docker build ./notes-service -t notes-app-service:latest
     - name: Pushing docker image to registry
       run: |
+        echo 'Tagging image'
+        docker tag notes-app-service:latest ${{ secrets.DOCKER_HUB_USER }}/notes-app-service:latest
+        echo 'Pushing image to dockerhub'
         docker push ${{ secrets.DOCKER_HUB_USER }}/notes-app-service:latest
