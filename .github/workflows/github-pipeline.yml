@@ -19,8 +19,16 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-
+    - name: Docker login
+      env: 
+        DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }} 
+        DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}  
+      run: |
+        docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
     # Runs a single command using the runners shell
     - name: Building docker image
       run: |
         docker build ./notes-service -t notes-app-service:latest
+    - name: Pushing docker image to registry
+    - run: |
+        docker push notes-app-service:latest
