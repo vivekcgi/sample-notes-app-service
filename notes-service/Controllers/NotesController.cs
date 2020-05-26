@@ -188,6 +188,8 @@ namespace notes_service.Controllers
             }
         }
 
+        [Route("trial")]
+        [HttpGet]
         public IActionResult Trial()
         {
             string clientId = Request.Headers["x-auth-client-id"];
