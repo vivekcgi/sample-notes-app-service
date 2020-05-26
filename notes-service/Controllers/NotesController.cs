@@ -187,5 +187,13 @@ namespace notes_service.Controllers
                 });
             }
         }
+
+        public IActionResult Trial()
+        {
+            string clientId = Request.Headers["x-auth-client-id"];
+            string userId = Request.Headers["x-auth-user-id"];
+            string userName = Request.Headers["x-auth-user-name"];
+            return Ok(new { success = true, message = "This is trial", data = new { clientId = clientId, userId = userId, userName = userName } });
+        }
     }
 }
