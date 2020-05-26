@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using notes_service.Models;
 using notes_service.Services;
+using notes_service.Extensions;
 
 namespace notes_service
 {
@@ -47,6 +48,8 @@ namespace notes_service
             {
                 MigrateDatabase(app);
             }
+
+            app.UseVerifyHeader();
 
             app.UseCors(options => options
             .AllowAnyOrigin()
