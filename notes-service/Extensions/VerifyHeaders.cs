@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,17 @@ namespace notes_service.Extensions
             string clientId = context.Request.Headers["x-auth-client-id"];
             string userId = context.Request.Headers["x-auth-user-id"];
             string userName = context.Request.Headers["x-auth-user-name"];
+
+            if (string.IsNullOrEmpty(clientId))
+            {
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(new { success = false, message = "Unknown client" }));
+                return;
+            }
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(new { success = false, message = "Unknown user" }));
+            }
 
             _logger.LogInformation($"Client Id: {clientId}");
             _logger.LogInformation($"User Id : {userId}");
